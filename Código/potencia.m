@@ -6,7 +6,7 @@ n=size(A,1);
 if nargin == 1
  tol = 1e-06; % Tolerancia
  x0=rand(n,1); % Vector de arranque
- nmax=100; % Nº máx iteraciones
+ nmax=100; % NÂº mÃ¡x iteraciones
 end
 
 x0=x0/norm(x0); x1=A*x0;
