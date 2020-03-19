@@ -1,6 +1,5 @@
 function w = minCuadLog(M)
 
-L= log(M);
 s=size(M);
 long= (s(1)*s(2))-s(1);
 
@@ -15,7 +14,7 @@ for i= (1:s(1))
             H(k,i)=1;
             H(k,j)=-1;
             % Generar b
-            b(k)=L(i,j);
+            b(k)=log(M(i,j));
             k=k+1;
         end
     end
