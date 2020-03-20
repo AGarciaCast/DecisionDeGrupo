@@ -1,7 +1,7 @@
 function w = minCuadLog(M)
 
 s=size(M);
-long= (s(1)*s(2))-s(1);
+long = (s(1)*s(2))-s(1);
 
 H = zeros([long,s(2)]);
 b=zeros([long,1]);
