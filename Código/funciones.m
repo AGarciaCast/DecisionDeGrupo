@@ -1,15 +1,18 @@
 function w = funciones(M, metodo)
 
-if metodo == 0
+if nargin == 1
     [~, w, ~] = potencia(M);
-elseif metodo == 1
+elseif nargin == 2
+    if metodo == 0
+        [~, w, ~] = potencia(M);
+    elseif metodo == 1
         w = minCuadLog(M);
+    else
+        w = minCuadPond(M);
+    end
 else
-    w = minCuadPond(M);
+    fprintf("Número erróneo de argumentos\n");
 end
 
-end
-    
-% Testear con caso de prueba
+return
 
-% Falta calcular indices de consistencia??
