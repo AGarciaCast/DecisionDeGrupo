@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>casoPrueba</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-03-25"><meta name="DC.source" content="casoPrueba.m"><style type="text/css">
+      --><title>casoPrueba</title><meta name="generator" content="MATLAB 9.7"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-04-05"><meta name="DC.source" content="casoPrueba.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -68,6 +68,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
   </style></head><body><div class="content"><pre class="codeinput">clc;
 clear;
+
 fprintf(<span class="string">"-------------Consistente-------------\n"</span>);
 w = [0.4 0.3 0.2 0.1]
 M= zeros(4);
@@ -78,41 +79,64 @@ M= zeros(4);
 <span class="keyword">end</span>
 
 M
+ic(M)
+
 fprintf(<span class="string">"-------------Metodo de la potencia-------------\n"</span>);
 w0 = funciones(M, 0) <span class="comment">% potencia(M)</span>
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w0)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w0)
 
 fprintf(<span class="string">"-------------Metodo de Minimos Cuadrados [Log]-------------\n"</span>);
 w1 = funciones(M, 1) <span class="comment">% minCuadLog(M)</span>
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w1)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w1)
+
 fprintf(<span class="string">"-------------Metodo de Minimos Cuadrados [Ponderado]-------------\n"</span>);
 w2 = funciones(M, 2) <span class="comment">% minCuadPond(M)</span>
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w2)
+
+fprintf(<span class="string">"-------------Metodo de Minimo Suma Desviaciones [Log]-------------\n"</span>);
+w3 = funciones(M, 3) <span class="comment">% minSumDesvLog(M)</span>
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w3)
+
+fprintf(<span class="string">"-------------Metodo de Minimo Suma Desviaciones [Ponderado]-------------\n"</span>);
+w4 = funciones(M, 4) <span class="comment">% minSumDesvPond(M)</span>
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w4)
 
 <span class="comment">%Dibujar pesos</span>
 figure();
-bar([w0';w1';w2']);
+c = categorical([<span class="string">"Potencia"</span>, <span class="string">"Min Cuadrado Log"</span>, <span class="string">"Min Cuadrado Pond"</span>, <span class="string">"Min Sum Desv Log"</span>, <span class="string">"Min Sum Desv Pond"</span>]);
+bar(c, [w0';w1';w2';w3';w4']);
 l=compose(<span class="string">"A%d"</span>,(1:length(M)));
 legend(l);
 
 clear;
+
 fprintf(<span class="string">"-------------NO Consistente-------------\n"</span>);
 M=[1 2,2,4;1,1,1.5,3;0.5,0.6,1,2;0.25,0.3,0.5,1]
+ic(M)
 
 fprintf(<span class="string">"-------------Metodo de la potencia-------------\n"</span>);
 w0 = funciones(M, 0) <span class="comment">% potencia(M)</span>
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w0)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w0)
 
 fprintf(<span class="string">"-------------Metodo de Minimos Cuadrados [Log]-------------\n"</span>);
 w1 = funciones(M, 1) <span class="comment">% minCuadLog(M)</span>
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w1)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w1)
 fprintf(<span class="string">"-------------Metodo de Minimos Cuadrados [Ponderado]-------------\n"</span>);
 w2 = funciones(M, 2) <span class="comment">% minCuadPond(M)</span>
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w2)
+
+fprintf(<span class="string">"-------------Metodo de Minimo Suma Desviaciones [Log]-------------\n"</span>);
+w3 = funciones(M, 3) <span class="comment">% minSumDesvLog(M)</span>
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w3)
+
+fprintf(<span class="string">"-------------Metodo de Minimo Suma Desviaciones [Ponderado]-------------\n"</span>);
+w4 = funciones(M, 4) <span class="comment">% minSumDesvPond(M)</span>
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w4)
 
 <span class="comment">%Dibujar pesos</span>
 figure();
-bar([w0';w1';w2']);
+c = categorical([<span class="string">"Potencia"</span>, <span class="string">"Min Cuadrado Log"</span>, <span class="string">"Min Cuadrado Pond"</span>, <span class="string">"Min Sum Desv Log"</span>, <span class="string">"Min Sum Desv Pond"</span>]);
+bar(c, [w0';w1';w2';w3';w4']);
 l=compose(<span class="string">"A%d"</span>,(1:length(M)));
 legend(l);
 </pre><pre class="codeoutput">-------------Consistente-------------
@@ -129,6 +153,11 @@ M =
     0.5000    0.6667    1.0000    2.0000
     0.2500    0.3333    0.5000    1.0000
 
+
+ans =
+
+     0
+
 -------------Metodo de la potencia-------------
 
 w0 =
@@ -141,27 +170,32 @@ w0 =
 
 errorInf =
 
-   8.8818e-16
+     0
 
 
 IndexMaxErr =
 
-     2     4
+     1     1
 
 
 errorFro =
 
-   1.0489e-15
+     0
 
 
 errorUno =
 
-   8.8818e-16
+     0
 
 
 errorErrRel =
 
-   5.8835e-16
+     0
+
+
+errorNoAciertos =
+
+     0
 
 -------------Metodo de Minimos Cuadrados [Log]-------------
 Warning: Rank deficient, rank = 3, tol =  6.526752e-15. 
@@ -191,12 +225,17 @@ errorFro =
 
 errorUno =
 
-   1.3323e-15
+   2.0817e-15
 
 
 errorErrRel =
 
    4.7175e-16
+
+
+errorNoAciertos =
+
+     0
 
 -------------Metodo de Minimos Cuadrados [Ponderado]-------------
 
@@ -225,12 +264,101 @@ errorFro =
 
 errorUno =
 
-   3.3307e-15
+   7.1887e-15
 
 
 errorErrRel =
 
    1.7297e-15
+
+
+errorNoAciertos =
+
+     0
+
+-------------Metodo de Minimo Suma Desviaciones [Log]-------------
+
+Optimal solution found.
+
+
+w3 =
+
+    0.4000
+    0.3000
+    0.2000
+    0.1000
+
+
+errorInf =
+
+   4.4409e-16
+
+
+IndexMaxErr =
+
+     2     4
+
+
+errorFro =
+
+   5.6882e-16
+
+
+errorUno =
+
+   1.1657e-15
+
+
+errorErrRel =
+
+   3.8593e-16
+
+
+errorNoAciertos =
+
+     0
+
+-------------Metodo de Minimo Suma Desviaciones [Ponderado]-------------
+
+Optimal solution found.
+
+
+w4 =
+
+    0.4000
+    0.3000
+    0.2000
+    0.1000
+
+
+errorInf =
+
+   8.8818e-16
+
+
+IndexMaxErr =
+
+     1     4
+
+
+errorFro =
+
+   1.1501e-15
+
+
+errorUno =
+
+   2.6368e-15
+
+
+errorErrRel =
+
+   5.6671e-16
+
+
+errorNoAciertos =
+
+     0
 
 -------------NO Consistente-------------
 
@@ -240,6 +368,11 @@ M =
     1.0000    1.0000    1.5000    3.0000
     0.5000    0.6000    1.0000    2.0000
     0.2500    0.3000    0.5000    1.0000
+
+
+ans =
+
+    0.0563
 
 -------------Metodo de la potencia-------------
 
@@ -268,12 +401,17 @@ errorFro =
 
 errorUno =
 
-    1.0037
+    2.5106
 
 
 errorErrRel =
 
     0.5395
+
+
+errorNoAciertos =
+
+     0
 
 -------------Metodo de Minimos Cuadrados [Log]-------------
 Warning: Rank deficient, rank = 3, tol =  6.526752e-15. 
@@ -303,12 +441,17 @@ errorFro =
 
 errorUno =
 
-    0.7380
+    1.2936
 
 
 errorErrRel =
 
     0.4380
+
+
+errorNoAciertos =
+
+     0
 
 -------------Metodo de Minimos Cuadrados [Ponderado]-------------
 
@@ -337,17 +480,107 @@ errorFro =
 
 errorUno =
 
-    0.6824
+    1.6652
 
 
 errorErrRel =
 
     0.5418
 
-</pre><img vspace="5" hspace="5" src="casoPrueba_01.png" alt=""> <img vspace="5" hspace="5" src="casoPrueba_02.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+
+errorNoAciertos =
+
+     0
+
+-------------Metodo de Minimo Suma Desviaciones [Log]-------------
+
+Optimal solution found.
+
+
+w3 =
+
+    0.4000
+    0.3000
+    0.2000
+    0.1000
+
+
+errorInf =
+
+    0.6667
+
+
+IndexMaxErr =
+
+     1     2
+
+
+errorFro =
+
+    0.7159
+
+
+errorUno =
+
+    1.0167
+
+
+errorErrRel =
+
+    0.4453
+
+
+errorNoAciertos =
+
+     0
+
+-------------Metodo de Minimo Suma Desviaciones [Ponderado]-------------
+
+Optimal solution found.
+
+
+w4 =
+
+    0.4000
+    0.3000
+    0.2000
+    0.1000
+
+
+errorInf =
+
+    0.6667
+
+
+IndexMaxErr =
+
+     1     2
+
+
+errorFro =
+
+    0.7159
+
+
+errorUno =
+
+    1.0167
+
+
+errorErrRel =
+
+    0.4453
+
+
+errorNoAciertos =
+
+     0
+
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 clc;
 clear;
+
 fprintf("REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-ConsistenteREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n");
 w = [0.4 0.3 0.2 0.1]
 M= zeros(4);
@@ -358,41 +591,64 @@ for i = 1:4
 end
 
 M
+ic(M)
+
 fprintf("REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-Metodo de la potenciaREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n");
 w0 = funciones(M, 0) % potencia(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w0)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w0)
 
 fprintf("REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-Metodo de Minimos Cuadrados [Log]REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n");
 w1 = funciones(M, 1) % minCuadLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w1)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w1)
+
 fprintf("REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-Metodo de Minimos Cuadrados [Ponderado]REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n");
 w2 = funciones(M, 2) % minCuadPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w2)
+
+fprintf("REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-Metodo de Minimo Suma Desviaciones [Log]REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n");
+w3 = funciones(M, 3) % minSumDesvLog(M)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w3)
+
+fprintf("REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-Metodo de Minimo Suma Desviaciones [Ponderado]REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n");
+w4 = funciones(M, 4) % minSumDesvPond(M)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w4)
 
 %Dibujar pesos
 figure();
-bar([w0';w1';w2']);
+c = categorical(["Potencia", "Min Cuadrado Log", "Min Cuadrado Pond", "Min Sum Desv Log", "Min Sum Desv Pond"]); 
+bar(c, [w0';w1';w2';w3';w4']);
 l=compose("A%d",(1:length(M)));
 legend(l);
 
 clear;
+
 fprintf("REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-NO ConsistenteREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n");
 M=[1 2,2,4;1,1,1.5,3;0.5,0.6,1,2;0.25,0.3,0.5,1]
+ic(M)
 
 fprintf("REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-Metodo de la potenciaREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n");
 w0 = funciones(M, 0) % potencia(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w0)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w0)
 
 fprintf("REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-Metodo de Minimos Cuadrados [Log]REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n");
 w1 = funciones(M, 1) % minCuadLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w1)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w1)
 fprintf("REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-Metodo de Minimos Cuadrados [Ponderado]REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n");
 w2 = funciones(M, 2) % minCuadPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w2)
+
+fprintf("REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-Metodo de Minimo Suma Desviaciones [Log]REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n");
+w3 = funciones(M, 3) % minSumDesvLog(M)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w3)
+
+fprintf("REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-Metodo de Minimo Suma Desviaciones [Ponderado]REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH-\n");
+w4 = funciones(M, 4) % minSumDesvPond(M)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w4)
 
 %Dibujar pesos
 figure();
-bar([w0';w1';w2']);
+c = categorical(["Potencia", "Min Cuadrado Log", "Min Cuadrado Pond", "Min Sum Desv Log", "Min Sum Desv Pond"]); 
+bar(c, [w0';w1';w2';w3';w4']);
 l=compose("A%d",(1:length(M)));
 legend(l);
 
