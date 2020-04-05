@@ -7,8 +7,12 @@ elseif nargin == 2
         [~, w, ~] = potencia(M);
     elseif metodo == 1
         w = minCuadLog(M);
-    else
+    elseif metodo == 2
         w = minCuadPond(M);
+    elseif metodo == 3
+        [w, ~, ~] = minSumDesvLog(M);
+    else
+        [w, ~, ~] = minSumDesvPond(M);
     end
 else
     fprintf("Número erróneo de argumentos\n");
