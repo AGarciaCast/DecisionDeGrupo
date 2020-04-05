@@ -15,27 +15,28 @@ ic(M)
 
 fprintf("-------------Metodo de la potencia-------------\n");
 w0 = funciones(M, 0) % potencia(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w0)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w0)
 
 fprintf("-------------Metodo de Minimos Cuadrados [Log]-------------\n");
 w1 = funciones(M, 1) % minCuadLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w1)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w1)
 
 fprintf("-------------Metodo de Minimos Cuadrados [Ponderado]-------------\n");
 w2 = funciones(M, 2) % minCuadPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w2)
 
 fprintf("-------------Metodo de Minimo Suma Desviaciones [Log]-------------\n");
 w3 = funciones(M, 3) % minSumDesvLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w3)
 
 fprintf("-------------Metodo de Minimo Suma Desviaciones [Ponderado]-------------\n");
 w4 = funciones(M, 4) % minSumDesvPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w4)
 
 %Dibujar pesos
 figure();
-bar([w0';w1';w2';w3';w4']);
+c = categorical(["Potencia", "Min Cuadrado Log", "Min Cuadrado Pond", "Min Sum Desv Log", "Min Sum Desv Pond"]); 
+bar(c, [w0';w1';w2';w3';w4']);
 l=compose("A%d",(1:length(M)));
 legend(l);
 
@@ -47,26 +48,27 @@ ic(M)
 
 fprintf("-------------Metodo de la potencia-------------\n");
 w0 = funciones(M, 0) % potencia(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w0)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w0)
 
 fprintf("-------------Metodo de Minimos Cuadrados [Log]-------------\n");
 w1 = funciones(M, 1) % minCuadLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w1)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w1)
 fprintf("-------------Metodo de Minimos Cuadrados [Ponderado]-------------\n");
 w2 = funciones(M, 2) % minCuadPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w2)
 
 fprintf("-------------Metodo de Minimo Suma Desviaciones [Log]-------------\n");
 w3 = funciones(M, 3) % minSumDesvLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w3)
 
 fprintf("-------------Metodo de Minimo Suma Desviaciones [Ponderado]-------------\n");
 w4 = funciones(M, 4) % minSumDesvPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w4)
 
 %Dibujar pesos
 figure();
-bar([w0';w1';w2';w3';w4']);
+c = categorical(["Potencia", "Min Cuadrado Log", "Min Cuadrado Pond", "Min Sum Desv Log", "Min Sum Desv Pond"]); 
+bar(c, [w0';w1';w2';w3';w4']);
 l=compose("A%d",(1:length(M)));
 legend(l);
 
