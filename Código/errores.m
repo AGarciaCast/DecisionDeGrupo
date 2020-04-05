@@ -1,4 +1,4 @@
-function [errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel] = errores(M,w)
+function [errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w)
 
 % Error
 % Construccion W
@@ -20,11 +20,22 @@ IndexMaxErr =[I_row, I_col];
 errorFro = norm(R,'fro');
 
 % Norma 1 
-errorUno = norm(R,1);
+errorUno = sum(sum(R));
 
 % Norma "ErrorRel"
 errorErrRel = norm(R./M, 'fro');
 
-% Norma "Aciertos": suma 1 si esta por encima de 1/2 ???
+% Norma "No aciertos"
+m = length(M);
+errorNoAciertos = 0;
+for i = 1:m
+    for j = i:m
+        if w(i) > w(j) && M(i,j) < 1
+            errorNoAciertos = errorNoAciertos + 1;
+        elseif (w(i) == w(j) && M(i,j) ~= 1) || (w(i) ~= w(j) && M(i,j) == 1)
+            errorNoAciertos = errorNoAciertos + 0.5;
+        end
+    end
+end
 
 end

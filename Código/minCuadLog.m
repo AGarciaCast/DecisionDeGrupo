@@ -4,7 +4,7 @@ s=size(M);
 long = (s(1)*s(2))-s(1);
 
 H = zeros([long,s(2)]);
-b=zeros([long,1]);
+b = zeros([long,1]);
 
 k=1;
 for i= (1:s(1))
