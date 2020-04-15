@@ -1,32 +1,47 @@
-function [w, n, p] = minSumDesvPond(M)
-s = size(M);
-long = (s(1)*s(2))-s(1);
+function [w, n, p] = minSumDesvPond(E, n)
 
-x = zeros(s(1) + long + long, 1);
-f = [zeros(s(1),1); ones(long,1); ones(long,1)];
+Aeq = [];
+beq = [];
 
-% No hay desigualdades
-A = [];
-b = [];
+s = zeros(1, 2);
 
-Aeq = zeros(long, s(2));
+for i = 1:n
+    M = E{i};
+    
+    s = size(M);
+    longM = (s(1)*s(2))-s(1);
 
-k=1;
-for i = 1:s(1)
-    for j = 1:s(2)
-        if (i ~= j)
-            % Generar Aeq
-            Aeq(k,i) = 1;
-            Aeq(k,j) = -M(i,j);
-            k = k + 1;
+    % No hay desigualdades
+    A = [];
+    b = [];
+
+    AeqAux = zeros(longM, s(2));
+
+    k = 1;
+    for i = 1:s(1)
+        for j = 1:s(2)
+            if (i ~= j)
+                % Generar Aeq
+                AeqAux(k,i) = (M(i,j) ~= 0);
+                AeqAux(k,j) = -M(i,j);
+                k = k + 1;
+            end
         end
     end
+    
+    Aeq = [Aeq; AeqAux];
 end
 
+long = size(Aeq, 1);
+
+%Añadimos las metas a las ecuaciones
 N = eye(long);
 P = -1 * eye(long);
 Aeq = [[Aeq N P]; [ones(1, s(1)) zeros(1, 2*long)]];
 
+x = zeros(s(1) + long + long, 1);
+f = [zeros(s(1),1); ones(long,1); ones(long,1)];
+    
 beq = zeros([long+1,1]);
 beq(long+1) = 1;
 
