@@ -3,6 +3,7 @@ function w = minCuadLog(E, n)
 H = [];
 b = [];
 
+
 for i = 1:n
     M = E{i};
 
@@ -35,9 +36,9 @@ for i = 1:n
 end
 
 % Resolver con minimos cuadrados
-v=H\b;
+v=H\b
 % Deshacer el cambio de logaritmo.
-w=exp(v)
+w=exp(v);
 % Normalizar
 w=w/sum(w);
 return
