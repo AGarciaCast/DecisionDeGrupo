@@ -1,27 +1,40 @@
-function w = minCuadPond(M)
+function w = minCuadPond(E, n)
 
-s=size(M);
-long= (s(1)*s(2))-s(1);
+H = [];
+b = [];
 
-H2 = zeros([long,s(2)]);
+for i = 1:n
+    M = E{i};
 
-% Generar b
-b=zeros([long+1,1]);
-b(long+1) = 1;
+    s = size(M);
+    long = (s(1)*s(2))-s(1);
 
-k=1;
-for i= (1:s(1))
-    for j=1:s(2)
-        if (i ~= j)
-            % Generar H
-            H2(k,i)=1;
-            H2(k,j)=-M(i,j);
-            k=k+1;
+    HAux = zeros([long,s(2)]);
+
+    % Generar b
+    bAux=zeros([long,1]);
+    %bAux(long+1) = 1;
+    b = [b; bAux];
+
+    k = 1;
+    for i = 1:s(1)
+        for j = 1:s(2)
+            if (i ~= j)
+                % Generar 
+                %(M(i,j) == 0) devuelve 1 o 0 si queremos descartar
+                %información que el experto no ha dado
+                HAux(k,i) = (M(i,j) ~= 0);
+                HAux(k,j) = -M(i,j);
+                k=k+1;
+            end
         end
     end
+    
+    H = [H; HAux];
 end
 
-H = [H2; ones(1, s(1))];
+H = [H;  ones(1, s(1))];
+b = [b; 1];
 
 % Resolver con minimos cuadrados
 w=H\b;

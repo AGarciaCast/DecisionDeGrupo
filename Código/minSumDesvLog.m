@@ -1,35 +1,57 @@
-function [w, n, p] = minSumDesvLog(M)
-s = size(M);
-long = (s(1)*s(2))-s(1);
+function [w, n, p] = minSumDesvLog(E, n)
 
-x = zeros(s(1) + long + long, 1);
-f = [zeros(s(1),1); ones(long,1); ones(long,1)];
+Aeq = [];
+beq = [];
 
-% No hay desigualdades
-A = [];
-b = [];
+s = zeros(1, 2);
 
-Aeq = zeros(long, s(2));
-beq = zeros(long, 1);
+for i = 1:n
+    M = E{i};
 
-k=1;
-for i = 1:s(1)
-    for j = 1:s(2)
-        if (i ~= j)
-            % Generar Aeq
-            Aeq(k,i) = -1;
-            Aeq(k,j) = 1;
-            % Generar beq
-            beq(k) = -log(M(i,j));
-            k = k + 1;
+    s = size(M);
+    longM = (s(1)*s(2))-s(1);
+
+    % No hay desigualdades
+    A = [];
+    b = [];
+
+    AeqAux = zeros(longM, s(2));
+    beqAux = zeros(longM, 1);
+
+    k=1;
+    for i = 1:s(1)
+        for j = 1:s(2)
+            if (i ~= j)
+                notZero = (log(M(i,j)) ~= -Inf);
+                % Generar Aeq
+                AeqAux(k,i) = notZero;
+                AeqAux(k,j) = -1*notZero ;
+                % Generar beq
+                if (notZero)
+                    beqAux(k) = log(M(i,j));
+                else 
+                    beqAux(k) = 0;
+                end
+                k = k + 1;
+            end
         end
     end
+    
+    
+    Aeq = [Aeq; AeqAux];
+    beq = [beq; beqAux];
 end
 
+long = size(Aeq, 1);
+
+%Añadimos las metas a las ecuaciones
 N = eye(long);
 P = -1 * eye(long);
 
 Aeq = [Aeq N P];
+
+x = zeros(s(1) + long + long, 1);
+f = [zeros(s(1),1); ones(long,1); ones(long,1)];
 
 % Todos los elementos de x mayor o igual que 0
 lb = zeros(length(x), 1);
