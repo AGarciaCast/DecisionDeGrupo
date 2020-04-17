@@ -15,23 +15,23 @@ ic(M)
 
 fprintf("-------------Metodo de la potencia-------------\n");
 w0 = funciones(0, M) % potencia(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w0)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w0, M)
 
 fprintf("-------------Metodo de Minimos Cuadrados [Log]-------------\n");
 w1 = funciones(1, M) % minCuadLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w1)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w1, M)
 
 fprintf("-------------Metodo de Minimos Cuadrados [Ponderado]-------------\n");
 w2 = funciones(2, M) % minCuadPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w2, M)
 
 fprintf("-------------Metodo de Minimo Suma Desviaciones [Log]-------------\n");
 w3 = funciones(3, M) % minSumDesvLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w3)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w3, M)
 
 fprintf("-------------Metodo de Minimo Suma Desviaciones [Ponderado]-------------\n");
 w4 = funciones(4, M) % minSumDesvPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w4)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w4, M)
 
 %Dibujar pesos
 figure();
@@ -56,19 +56,19 @@ ic(M)
 
 fprintf("-------------Metodo de Minimos Cuadrados [Log]-------------\n");
 w1 = funciones(1, M, M) % minCuadLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w1)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w1, M, M)
 
 fprintf("-------------Metodo de Minimos Cuadrados [Ponderado]-------------\n");
 w2 = funciones(2, M, M) % minCuadPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w2, M, M)
 
 fprintf("-------------Metodo de Minimo Suma Desviaciones [Log]-------------\n");
 w3 = funciones(3, M, M) % minSumDesvLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w3)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w3, M, M)
 
 fprintf("-------------Metodo de Minimo Suma Desviaciones [Ponderado]-------------\n");
 w4 = funciones(4, M, M) % minSumDesvPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w4)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w4, M, M)
 
 %Dibujar pesos
 figure();
@@ -97,25 +97,33 @@ M(:,1) = 0;
 M
 ic(M)
 
+%M =
+%
+%         0         0         0         0
+%         0    1.0000    1.5000    3.0000
+%         0    0.6667    1.0000    2.0000
+%         0    0.3333    0.5000    1.0000
+
+
 fprintf("-------------Metodo de la potencia-------------\n");
 w0 = funciones(0, M) % potencia(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w0)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w0, M)
 
 fprintf("-------------Metodo de Minimos Cuadrados [Log]-------------\n");
 w1 = funciones(1, M) % minCuadLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w1)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w1, M)
 
 fprintf("-------------Metodo de Minimos Cuadrados [Ponderado]-------------\n");
 w2 = funciones(2, M) % minCuadPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w2, M)
 
 fprintf("-------------Metodo de Minimo Suma Desviaciones [Log]-------------\n");
 w3 = funciones(3, M) % minSumDesvLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w3)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w3, M)
 
 fprintf("-------------Metodo de Minimo Suma Desviaciones [Ponderado]-------------\n");
 w4 = funciones(4, M) % minSumDesvPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w4)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w4, M)
 
 %Dibujar pesos
 figure();
@@ -128,7 +136,7 @@ clear;
 
 
 fprintf("-------------NO Consistente-------------\n");
-M = [1.0000    0.1429    0.1429    0.2000;
+M = [1.0000   0.1429    0.1429    0.2000;
     7.0000    1.0000    0.5000    0.3333;
     7.0000    2.0000    1.0000    0.1111;
     5.0000    3.0000    9.0000    1.0000]
@@ -139,22 +147,22 @@ ic(M)
 
 fprintf("-------------Metodo de la potencia-------------\n");
 w0 = funciones(0, M) % potencia(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w0)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w0, M)
 
 fprintf("-------------Metodo de Minimos Cuadrados [Log]-------------\n");
 w1 = funciones(1, M) % minCuadLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w1)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w1, M)
 fprintf("-------------Metodo de Minimos Cuadrados [Ponderado]-------------\n");
 w2 = funciones(2, M) % minCuadPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w2, M)
 
 fprintf("-------------Metodo de Minimo Suma Desviaciones [Log]-------------\n");
 w3 = funciones(3, M) % minSumDesvLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w3)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w3, M)
 
 fprintf("-------------Metodo de Minimo Suma Desviaciones [Ponderado]-------------\n");
 w4 = funciones(4, M) % minSumDesvPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w4)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w4, M)
 
 %Dibujar pesos
 figure();
@@ -181,23 +189,25 @@ M3 = [1 1/3 1/7 1/9;
       9  5   7    1]
 
 %Tomamos M3 traspuesta
-
-ic(M)
+ic(M1)
+ic(M2)
+ic(M3')
 
 fprintf("-------------Metodo de Minimos Cuadrados [Log]-------------\n");
 w1 = funciones(1, M1, M2, M3') % minCuadLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w1)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w1, M1, M2, M3')
+
 fprintf("-------------Metodo de Minimos Cuadrados [Ponderado]-------------\n");
 w2 = funciones(2, M1, M2, M3') % minCuadPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w2)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w2, M1, M2, M3')
 
 fprintf("-------------Metodo de Minimo Suma Desviaciones [Log]-------------\n");
 w3 = funciones(3, M1, M2, M3') % minSumDesvLog(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w3)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w3, M1, M2, M3')
 
 fprintf("-------------Metodo de Minimo Suma Desviaciones [Ponderado]-------------\n");
 w4 = funciones(4, M1, M2, M3') % minSumDesvPond(M)
-[errorInf, IndexMaxErr, errorFro, errorUno, errorErrRel, errorNoAciertos] = errores(M,w4)
+[errorInf, IndexMaxErr, errorFro, errorUno,  errorNoAciertos] = errores(w4, M1, M2, M3')
 
 %Dibujar pesos
 figure();
