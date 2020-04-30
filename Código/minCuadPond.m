@@ -35,7 +35,7 @@ end
 
 H = [H;  ones(1, s(1))];
 b = [b; 1];
-
+cond(H'*H)
 % Resolver con minimos cuadrados
 w=H\b;
 

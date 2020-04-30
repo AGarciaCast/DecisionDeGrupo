@@ -34,9 +34,13 @@ for i = 1:n
     H = [H; HAux];
     b = [b; bAux];
 end
-
+cond(H'*H)
+% The result h is 1 if the test rejects the null hypothesis at the 5% significance level, 
+% that the data in vector x is from a population with a normal distribution, 
+% using the Anderson-Darling test, or 0 otherwise.
+[h,p,adstat,cv] = adtest(exp(b))
 % Resolver con minimos cuadrados
-v=H\b
+v=H\b;
 % Deshacer el cambio de logaritmo.
 w=exp(v);
 % Normalizar
