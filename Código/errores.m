@@ -1,4 +1,4 @@
-function [errorInf, IndexMaxErr, errorFro, errorUno, errorNoAciertos] = errores(w, varargin)
+function [errorInf, IndexMaxErr, errorFro, errorUno, errorNoAciertos] = errores(w,varargin)
 
 datos_conocidos_total = 0;
 errorInf = [];
@@ -38,9 +38,11 @@ for k = 1:nargin
             end
         end
     end
-
+    
+    
+    WAux2 = WAux .* zerosM(E);
     % Matriz de residuos
-    R = abs(E-WAux) ;
+    R = abs(E-WAux2) ;
 
     % Norma Infinito: residuo maximo y su indice
     [errorInfAux, I] = max(R(:));
@@ -82,7 +84,7 @@ for k = 1:nargin
     end
         
     M = [M; E];
-    W = [W; WAux];
+    W = [W; WAux2];
     datos_conocidos_total = datos_conocidos_total + datos_conocidos;
     
 end
