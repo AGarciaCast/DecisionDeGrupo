@@ -1,3 +1,3 @@
 function mBin = zerosM(M)
-mBin=(M~=0);
+    mBin=(M~=0);
 return
